@@ -1,0 +1,9 @@
+{
+  "lock": false,
+  "tasks": {
+    "convert": "deno run ./latinum2alphabet.ts"
+  },
+  "fmt": {
+    "singleQuote": true
+  }
+}

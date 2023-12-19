@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cSpell.words": [
+			"aigu",
+			"cédille",
+			"circonflexe",
+			"eszett",
+			"latinum",
+			"tréma"
+		]
+	}
+}
