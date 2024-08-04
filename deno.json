@@ -1,7 +1,8 @@
 {
   "lock": false,
   "tasks": {
-    "convert": "deno run ./latinum2alphabet.ts"
+    "convert": "deno run ./mod.ts",
+    "build": "deno bundle ./browser.ts ./docs/latinum2alphabet.js"
   },
   "fmt": {
     "singleQuote": true

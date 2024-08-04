@@ -1,5 +1,6 @@
-import { assertEquals } from 'https://deno.land/std@0.181.0/testing/asserts.ts';
+import { assert, assertEquals } from 'jsr:@std/assert@^1.0.1';
 import { convertLatinumToAlphabet } from './latinum2alphabet.ts';
+import { LATINUM_TO_ALPHABET_LIST } from './list.ts';
 
 const dataset: {
   latinum: string;
@@ -32,6 +33,14 @@ const dataset: {
   {
     latinum: 'æœÆŒ',
     alphabet: 'aeoeAeOe',
+  },
+  {
+    latinum: 'αΑβΒγΓδΔεΕζΖηΗθΘιΙκΚλΛμΜνΝξΞοΟπΠρΡσΣτΤυΥφΦχΧψΨωΩ',
+    alphabet: 'aAvVgGdDeEzZiIthThiIkKlLmMnNksKsoOpPrRsStTyYphPhchChpsPsoO',
+  },
+  {
+    latinum: 'āĀēĒīĪōŌūŪn̄N̄',
+    alphabet: 'aAeEiIoOuUnN',
   },
   {
     latinum: 'þÞðÐøØåÅæÆ',
@@ -70,6 +79,17 @@ const dataset: {
     alphabet: 'Aegir',
   },
 ];
+
+Deno.test('Duplicate check:', () => {
+  const keys: string[] = [];
+  for (const item of LATINUM_TO_ALPHABET_LIST) {
+    if (keys.includes(item.latinum)) {
+      assert(false, `Duplicate key: ${item.latinum}`);
+    } else {
+      keys.push(item.latinum);
+    }
+  }
+});
 
 for (const data of dataset) {
   Deno.test(`latinum2alphabet: ${data.latinum} -> ${data.alphabet}`, () => {
