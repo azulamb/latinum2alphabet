@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja" style="font-size:20px;">
+<head>
+	<meta charset="utf-8">
+	<title>Latinum to Alphabet</title>
+	<meta name="description" content="">
+	<script src="./latinum2alphabet.js" defer></script>
+	<style>
+html { margin: 0; height: 100%; }
+body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+body > div { height: 100%; display: grid; grid-template-columns: 50% 50%; grid-template-rows: calc(50% - 0.5rem) 1rem calc(50% - 0.5rem); grid-template-areas: 's l' 'c l' 'd l'; }
+textarea { font-size: 1rem; }
+#convert::before { content: 'Convert'; }
+#list { overflow: auto; height: 100%; box-sizing: border-box; padding: 0.5rem 0.5rem 3rem; }
+#list > div { display: flex; flex-wrap: wrap; gap: 0.5rem;}
+#list > div::before { content: var(--type, 'Unknown'); font-weight: bold; display: block; width: 100%; }
+#list > div + div { margin-top: 0.5rem; }
+[data-type="umlauts"] { --type: 'Umlauts'; }
+[data-type="eszett"] { --type: 'Eszett'; }
+[data-type="accent_aigu"] { --type: 'Accent aigu'; }
+[data-type="accent_grave"] { --type: 'Accent grave'; }
+[data-type="circonflexe"] { --type: 'Circonflexe'; }
+[data-type="trema"] { --type: 'Tréma'; }
+[data-type="cedille"] { --type: 'Cédille'; }
+[data-type="ligatures"] { --type: 'Ligatures'; }
+[data-type="greek_alphabet"] { --type: 'Greek alphabet'; }
+[data-type="macron"] { --type: 'Macron'; }
+[data-type="others"] { --type: 'Others'; }
+	</style>
+	<script>
+const CharItemStyle = new CSSStyleSheet();
+CharItemStyle.replaceSync([
+	':host { display: block; }',
+	':host button { width: 100%; height: 100%; display: grid; grid-template-rows: 1rem 0.5rem; padding: 0.5rem; gap: 0.2rem; }',
+	':host button span:first-child { font-size: 1rem; }',
+	':host button span:last-child { font-size: 0.5rem; }',
+].join('\n'));
+customElements.define('char-item', class extends HTMLElement {
+	constructor() {
+		super();
+
+		this.latinumArea = document.createElement('span');
+		this.alphabetArea = document.createElement('span');
+		const button = document.createElement('button');
+		button.appendChild(this.latinumArea);
+		button.appendChild(this.alphabetArea);
+
+		const shadow = this.attachShadow({mode: 'open'});
+		shadow.adoptedStyleSheets.push(CharItemStyle);
+		shadow.appendChild(button);
+
+		this.update();
+	}
+	static get observedAttributes() {
+		return ['alphabet', 'latinum', 'disabled'];
+	}
+	attributeChangedCallback(name, oldValue, newValue) {
+		this.update();
+	}
+	update() {
+		this.latinumArea.textContent = this.latinum;
+		this.alphabetArea.textContent = this.alphabet;
+	}
+	get latinum() {
+		return this.getAttribute('latinum') || '';
+	}
+	set latinum(value) {
+		this.setAttribute('latinum', value);
+	}
+	get alphabet() {
+		return this.getAttribute('alphabet') || '';
+	}
+	set alphabet(value) {
+		this.setAttribute('alphabet', value);
+	}
+	get disabled() {
+		return this.hasAttribute('disabled');
+	}
+	set disabled(value) {
+		if (value) {
+			this.setAttribute('disabled', '');
+		} else {
+			this.removeAttribute('disabled');
+		}
+	}
+});
+document.addEventListener('DOMContentLoaded', () => {
+	const src = document.getElementById('src');
+	const dst = document.getElementById('dst');
+	function update() {
+		dst.value = Latinum2Alphabet.convert(src.value);
+	}
+	src.addEventListener('input', () => {
+		update();
+	});
+	document.getElementById('convert').addEventListener('click', () => {
+		update();
+	});
+
+	const list = document.getElementById('list');
+	const CharItem = customElements.get('char-item');
+	const group = {};
+	for (const item of Latinum2Alphabet.list) {
+		if (!group[item.type]) {
+			group[item.type] = document.createElement('div');
+			group[item.type].dataset.type = item.type;
+			list.appendChild(group[item.type]);
+		}
+		const element = new CharItem();
+		element.latinum = item.latinum;
+		element.alphabet = item.alphabet;
+		element.addEventListener('click', () => {
+			src.value += item.latinum;
+			update();
+		});
+		group[item.type].appendChild(element);
+	}
+});
+	</script>
+</head>
+<body>
+	<div>
+		<textarea id="src" style="grid-area:s;" placeholder="String"></textarea>
+		<button id="convert" style="grid-area:c;"></button>
+		<textarea id="dst" readonly style="grid-area:d;" placeholder="Converted string."></textarea>
+		<div id="list" style="grid-area:l;"></div>
+	</div>
+</body>
+</html>

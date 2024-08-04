@@ -1,0 +1,23 @@
+{
+  "deno.enablePaths": [
+    "libs/",
+    "mod.ts"
+  ],
+  "cSpell.words": [
+    "Ägir",
+    "aigu",
+    "Algérie",
+    "Béarn",
+    "Bertin",
+    "cédille",
+    "circonflexe",
+    "Émile",
+    "eszett",
+    "Koeln",
+    "Köln",
+    "latinum",
+    "Nuernberg",
+    "Painlevé",
+    "tréma"
+  ]
+}
