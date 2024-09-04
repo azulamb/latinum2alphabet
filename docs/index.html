@@ -12,8 +12,9 @@ body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
 body > div { height: 100%; display: grid; grid-template-columns: 50% 50%; grid-template-rows: calc(50% - 0.5rem) 1rem calc(50% - 0.5rem); grid-template-areas: 's l' 'c l' 'd l'; }
 textarea { font-size: 1rem; }
 #convert::before { content: 'Convert'; }
-#list { overflow: auto; height: 100%; box-sizing: border-box; padding: 0.5rem 0.5rem 3rem; }
-#list > div { display: flex; flex-wrap: wrap; gap: 0.5rem;}
+footer { display: block; text-align: center; margin-top: 2rem; }
+.contents { overflow: auto; height: 100%; box-sizing: border-box; padding: 0.5rem 0.5rem 1rem; }
+#list > div { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 #list > div::before { content: var(--type, 'Unknown'); font-weight: bold; display: block; width: 100%; }
 #list > div + div { margin-top: 0.5rem; }
 [data-type="umlauts"] { --type: 'Umlauts'; }
@@ -124,7 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		<textarea id="src" style="grid-area:s;" placeholder="String"></textarea>
 		<button id="convert" style="grid-area:c;"></button>
 		<textarea id="dst" readonly style="grid-area:d;" placeholder="Converted string."></textarea>
-		<div id="list" style="grid-area:l;"></div>
+		<div class="contents" style="grid-area:l;">
+			<div id="list"></div>
+			<footer><a href="https://github.com/azulamb/latinum2alphabet">GitHub</a></footer>
+		</div>
 	</div>
 </body>
 </html>
