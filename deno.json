@@ -2,7 +2,7 @@
   "lock": false,
   "tasks": {
     "convert": "deno run ./mod.ts",
-    "build": "deno bundle ./browser.ts ./docs/latinum2alphabet.js"
+    "build": "deno run --allow-read --allow-write --allow-env ./bundle.ts"
   },
   "fmt": {
     "singleQuote": true

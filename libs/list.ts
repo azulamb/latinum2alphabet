@@ -12,6 +12,7 @@ export const LATINUM_TO_ALPHABET_LIST: {
     | 'ligatures'
     | 'greek_alphabet'
     | 'macron'
+    | 'portugal'
     | 'others';
 }[] = [
   // Umlauts
@@ -578,6 +579,27 @@ export const LATINUM_TO_ALPHABET_LIST: {
     latinum: 'N̄',
     alphabet: 'N',
     type: 'macron',
+  },
+  // Portugal
+  {
+    latinum: 'Ã',
+    alphabet: 'A',
+    type: 'portugal',
+  },
+  {
+    latinum: 'ã',
+    alphabet: 'a',
+    type: 'portugal',
+  },
+  {
+    latinum: 'Õ',
+    alphabet: 'O',
+    type: 'portugal',
+  },
+  {
+    latinum: 'õ',
+    alphabet: 'o',
+    type: 'portugal',
   },
   // Others
   {

@@ -43,6 +43,10 @@ const dataset: {
     alphabet: 'aAeEiIoOuUnN',
   },
   {
+    latinum: 'ÃãÕõ',
+    alphabet: 'AaOo',
+  },
+  {
     latinum: 'þÞðÐøØåÅæÆ',
     alphabet: 'thThdhDhoeOeaaAaaeAe',
   },
